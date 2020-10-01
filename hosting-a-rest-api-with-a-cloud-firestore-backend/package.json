@@ -1,0 +1,15 @@
+{
+  "name": "bark-bark",
+  "version": "1.0.0",
+  "description": "REST API to access Bark Bark's Firestore breed data",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Roger Martinez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "@google-cloud/firestore": "^4.2.0"
+  }
+}
