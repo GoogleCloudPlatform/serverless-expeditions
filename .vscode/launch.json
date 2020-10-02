@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Cloud Run: Run/Debug Locally",
+            "type": "cloudcode.cloudrun",
+            "request": "launch",
+            "build": {
+                "docker": {
+                    "path": "using-python-on-google-cloud-with-cloud-run/euro-to-usd/Dockerfile"
+                }
+            },
+            "image": "serverless-expeditions",
+            "service": {
+                "name": "serverless-expeditions",
+                "containerPort": 8080,
+                "resources": {
+                    "limits": {
+                        "memory": "256Mi"
+                    }
+                }
+            },
+            "target": {
+                "minikube": {}
+            },
+            "watch": true
+        }
+    ]
+}

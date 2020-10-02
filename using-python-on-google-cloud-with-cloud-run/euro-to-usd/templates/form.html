@@ -1,0 +1,31 @@
+<html>
+  <head>
+      <link rel= "stylesheet"
+            type= "text/css"
+            href="{{url_for('static',
+                  filename=
+                  'styles/style.css')}}">
+  </head>
+  <body>
+    <h1>Euro to USD</h1>
+    <div id="output">
+      <form method="POST">
+        € <input type="number"
+               name="euros"
+               step=".01"
+               min="0.01"
+               placeholder="Euros"
+               required
+               >
+        <input type="submit"
+               value="Convert">
+      </form>
+      {% if usd %}
+      <h3>
+        €{{euros}} =
+        ${{usd}}
+      </h3>
+      {% endif %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+html * {
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 500px;
+  margin:0 auto;
+  text-align: center;
+}
+
+#output {
+  padding-top:10px;
+  display: inline-block;
+}
