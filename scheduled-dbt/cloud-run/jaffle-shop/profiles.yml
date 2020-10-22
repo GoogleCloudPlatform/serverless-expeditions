@@ -1,0 +1,8 @@
+jaffle_shop:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: dbt-test-291721
+      dataset: customers
