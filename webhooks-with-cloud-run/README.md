@@ -2,7 +2,7 @@
 
 This repository contains the code for the Serverless Expeditions episodes
 Webhooks with Cloud Run [part 1](https://youtu.be/53MCPoFr03E),
-[part 2](https://youtu.be/tsKZ_u_uIAs).
+part 2 (link to be added).
 
 The code demonstrates how to use Cloud Run to host a webhook target. It
 processes events from Github to:
