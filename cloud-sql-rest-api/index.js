@@ -29,3 +29,21 @@ app.get("/:breed", async (req, res) => {
     res.json(results[0]);
   });
 });
+
+app.post("/", async (req, res) => {
+  const data = {
+    name: req.body.name,
+    type: req.body.type,
+    lifeExpectancy: req.body.lifeExpectancy,
+    origin: req.body.origin,
+  };
+  const query = `
+    INSERT INTO breeds VALUES 
+    ('${data.name}',
+    '${data.type}',
+    ${data.lifeExpectancy},
+    '${data.origin}')`;
+  pool.query(query, (error, results) => {
+    res.json({ status: "sucess" });
+  });
+});
