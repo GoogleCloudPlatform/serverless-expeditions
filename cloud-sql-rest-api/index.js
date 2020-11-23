@@ -25,8 +25,9 @@ app.get("/:breed", async (req, res) => {
   pool.query(query, (error, results) => {
     if (!results[0]) {
       res.json({ status: "Not found!" });
+    } else {
+      res.json(results[0]);
     }
-    res.json(results[0]);
   });
 });
 
@@ -43,7 +44,11 @@ app.post("/", async (req, res) => {
     '${data.type}',
     ${data.lifeExpectancy},
     '${data.origin}')`;
-  pool.query(query, (error, results) => {
-    res.json({ status: "sucess" });
+  pool.query(query, (error) => {
+    if (error) {
+      res.json({ status: "failure", reason: error.code  });
+    } else {
+    res.json({ status: "sucess", data: data});
+    }
   });
 });
