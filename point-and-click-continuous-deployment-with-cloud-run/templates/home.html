@@ -1,0 +1,16 @@
+{% extends "default.html" %}
+{% block title %}My Travels{% endblock %}
+{% block header_image %}/img/tobias-oetiker-xpX6NpnzWDc-unsplash.jpg{% endblock %}
+{% block body %}
+
+<section><article>
+{% for entry in entries %}
+
+    <h3>{{entry.title}}</h3>
+    <p>{{entry.abstract}}</p>
+    <p><a href="{{entry.url}}">Read more</a></p>
+
+{% endfor %}
+</article></section>
+
+{% endblock %}

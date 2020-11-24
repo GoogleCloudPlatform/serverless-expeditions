@@ -1,0 +1,22 @@
+{% extends "default.html" %}
+{% block title %}{{entry.title}}{% endblock %}
+{% block subtitle %}{{entry.abstract}}{% endblock %}
+
+{% block header_image %}{{entry.header_image}}{% endblock %}
+
+{% block body %}
+<section>
+    <artlcle>
+    {{ entry.content | markdown | safe}}
+    </artlcle>
+
+    {% for image in entry.images %}
+    <aside> 
+        <img src="{{ image.url }}" />
+        {{ image.caption }}
+    </aside>
+    {% endfor %}
+
+
+</section>
+{% endblock %}

@@ -1,0 +1,28 @@
+<html>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css') }}?a1111">
+    
+    <title>{% block title %}{% endblock %}</title>
+    <body>
+        <header class="rich-header" style="background-image: url('{% block header_image %}{%endblock%}'); ">
+            <nav>
+            <a href="/">My Travels</a>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Entries</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            </nav>
+            <h1>{{ self.title() }}</h1>
+            <h3>{% block subtitle %}{% endblock %}</h3>            
+        </header>
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+        <footer>
+            <section>
+            <a href="https://github.com/momander">Made by Martin</a>
+            </section>
+        </footer>
+    </body>
+</html>
