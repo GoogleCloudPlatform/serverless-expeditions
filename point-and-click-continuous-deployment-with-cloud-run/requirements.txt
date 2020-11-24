@@ -1,0 +1,3 @@
+Flask==1.1.2
+markdown2
+python_frontmatter

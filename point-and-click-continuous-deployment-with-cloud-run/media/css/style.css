@@ -1,0 +1,66 @@
+.image img {
+    height: 300px;
+    object-fit: cover;
+    max-width: 100%;
+    width: 800px;
+}
+
+body {
+    padding: 0;
+}
+
+.rich-header {
+    background: no-repeat center center;
+    background-color: #808080;
+    background-attachment: scroll;
+    background-size: cover;
+    max-height: 400px;
+}
+
+header {
+    max-height: 400px;
+}
+
+nav {
+    margin-bottom: 2em;
+}
+
+nav a {
+    color: white;
+}
+
+.rich-header h1 {
+    font-size: 3.5em;
+}
+
+.rich-header h1, .rich-header h2, .rich-header h3 {
+    color: white;
+}
+
+footer {
+    background-color: #eee;
+    height: 20px;
+}
+
+:root {
+    --border-radius: 5px;
+    --box-shadow: 2px 2px 10px;
+    --color: ##920de9;
+    --color-accent: ##920de9b;
+    --color-bg: #fff;
+    --color-bg-secondary: #e9e9e9;
+    --color-secondary: #118bee;
+    --color-secondary-accent: #118bee0b;
+    --color-shadow: #f4f4f4;
+    --color-text: #000;
+    --color-text-secondary: #999;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --hover-brightness: 1.2;
+    --justify-important: center;
+    --justify-normal: left;
+    --line-height: 150%;
+    --width-card: 285px;
+    --width-card-medium: 460px;
+    --width-card-wide: 800px;
+    --width-content: 1080px;
+}
