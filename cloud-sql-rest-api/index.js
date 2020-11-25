@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
-
 const app = express();
+
 app.use(express.json());
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
@@ -13,9 +13,8 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/:breed", async (req, res) => {
-  const breed = req.params.breed;
-  const query = `SELECT * FROM breeds WHERE name = '${breed}'`;
-  pool.query(query, (error, results) => {
+  const query = "SELECT * FROM breeds WHERE name = ?";
+  pool.query(query, [ req.params.breed ], (error, results) => {
     if (!results[0]) {
       res.json({ status: "Not found!" });
     } else {
@@ -23,7 +22,6 @@ app.get("/:breed", async (req, res) => {
     }
   });
 });
-
 const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
@@ -38,18 +36,12 @@ app.post("/", async (req, res) => {
     lifeExpectancy: req.body.lifeExpectancy,
     origin: req.body.origin
   }
-  
-  const query = `
-    INSERT INTO breeds VALUES 
-    ('${data.name}',
-    '${data.type}',
-    ${data.lifeExpectancy},
-    '${data.origin}')`;
-  pool.query(query, (error) => {
+  const query = "INSERT INTO breeds VALUES (?, ?, ?, ?)";
+  pool.query(query, Object.values(data), (error) => {
     if (error) {
       res.json({ status: "failure", reason: error.code  });
     } else {
-    res.json({ status: "sucess", data: data});
+    res.json({ status: "success", data: data});
     }
   });
 });
