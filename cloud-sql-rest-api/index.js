@@ -32,12 +32,19 @@ const pool = mysql.createPool({
 });
 
 app.post("/", async (req, res) => {
+  const data = {
+    name: req.body.name,
+    type: req.body.type,
+    lifeExpectancy: req.body.lifeExpectancy,
+    origin: req.body.origin
+  }
+  
   const query = `
     INSERT INTO breeds VALUES 
-    ('${req.body.name}',
-    '${req.body.type}',
-    ${req.body.lifeExpectancy},
-    '${req.body.origin}')`;
+    ('${data.name}',
+    '${data.type}',
+    ${data.lifeExpectancy},
+    '${data.origin}')`;
   pool.query(query, (error) => {
     if (error) {
       res.json({ status: "failure", reason: error.code  });
