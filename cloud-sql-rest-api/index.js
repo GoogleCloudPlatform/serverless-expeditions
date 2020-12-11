@@ -22,6 +22,7 @@ app.get("/:breed", async (req, res) => {
     }
   });
 });
+
 const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
@@ -41,7 +42,7 @@ app.post("/", async (req, res) => {
     if (error) {
       res.json({ status: "failure", reason: error.code  });
     } else {
-    res.json({ status: "success", data: data});
+      res.json({ status: "success", data: data});
     }
   });
 });
