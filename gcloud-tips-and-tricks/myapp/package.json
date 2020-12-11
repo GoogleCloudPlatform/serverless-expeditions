@@ -1,0 +1,11 @@
+{
+  "name": "ffnode12",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "functions-framework"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^1.2.1"
+  }
+}
