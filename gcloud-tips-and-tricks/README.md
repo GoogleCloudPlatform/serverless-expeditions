@@ -7,7 +7,7 @@ Tips and tricks when using `gcloud`.
 ```sh
 PROJECT=$(gcloud config get-value project)
 PROJECT_ID=$PROJECT
-cd myapp && gcloud builds submit --tag gcr.io/$PROJECT/helloworld --platform managed --region us-central1
+cd myapp && gcloud builds submit --tag gcr.io/$PROJECT/helloworld && cd ..
 gcloud config unset run/platform
 gcloud config unset run/region
 ```
