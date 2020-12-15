@@ -19,6 +19,12 @@ gcloud config unset run/region
 gcloud beta interactive
 gcloud run deploy --
 
+
+
+
+
+
+
 # Tip 2: Prevent Prompts. Set Defaults.
 
 ## Without flags
@@ -38,14 +44,32 @@ gcloud config set run/region europe-west3
 gcloud run deploy myapp \
   --image gcr.io/$PROJECT/myapp
 
+
+
+
+
+
+
 # Tip 3: Getting / Setting Project ID
 gcloud config set project "my-project"
 PROJECT=$(gcloud config get-value core/project)
+
+
+
+
+
+
 
 # Tip 4: See if Billing Is Enabled
 gcloud beta billing projects describe \
   $(gcloud config get-value project) \
   --format="value(billingEnabled)"
+
+
+
+
+
+
 
 # Tip 5: Authenticated Test Cloud Run
 gcloud run deploy myapp \
@@ -55,6 +79,12 @@ curl https://myapp-q7vieseilq-ey.a.run.app
 
 curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
 https://myapp-q7vieseilq-ey.a.run.app
+
+
+
+
+
+
 
 # Tips 6: Project ID To Project Number
 PROJECT_NUMBER=$(gcloud projects list \
