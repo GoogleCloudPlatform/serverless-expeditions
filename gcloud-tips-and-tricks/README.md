@@ -17,6 +17,7 @@ gcloud config unset run/region
 ```sh
 # Tip 1: Interactive Mode
 gcloud beta interactive
+
 gcloud run deploy --
 
 
@@ -25,7 +26,15 @@ gcloud run deploy --
 
 
 
+
+
+
+
+
+
 # Tip 2: Prevent Prompts. Set Defaults.
+
+gcloud config set <property> <value>
 
 ## Without flags
 
@@ -36,8 +45,6 @@ gcloud run deploy myapp \
   --region europe-west3
 
 ## Or config
-gcloud config set <property> <value>
-
 gcloud config set run/platform managed
 gcloud config set run/region europe-west3
 
@@ -60,10 +67,22 @@ PROJECT=$(gcloud config get-value core/project)
 
 
 
+
+
+
+
+
+
 # Tip 4: See if Billing Is Enabled
 gcloud beta billing projects describe \
   $(gcloud config get-value project) \
   --format="value(billingEnabled)"
+
+
+
+
+
+
 
 
 
@@ -79,6 +98,9 @@ curl https://myapp-q7vieseilq-ey.a.run.app
 
 curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
 https://myapp-q7vieseilq-ey.a.run.app
+
+
+
 
 
 
