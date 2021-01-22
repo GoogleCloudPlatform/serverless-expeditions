@@ -1,6 +1,6 @@
-FROM node:10
+FROM node:14
 WORKDIR /usr/src/app
 COPY package.json package*.json ./
-RUN npm install --only=production
+RUN npm ci --only=production
 COPY . .
 CMD [ "npm", "start" ]
