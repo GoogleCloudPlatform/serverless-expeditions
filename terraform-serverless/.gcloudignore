@@ -1,0 +1,20 @@
+# This file is a list of things Cloud Build ignores when sending files for building
+
+# Ignores everything in .gitignore
+#!include:.gitignore
+
+# ignore git itself
+.git/
+
+# Local terraform files
+terraform.*
+.terraform
+
+# Python virtualenv
+venv/
+
+# VSCode configs
+.vscode/
+
+# Docs (not required for the image to be built)
+docs/

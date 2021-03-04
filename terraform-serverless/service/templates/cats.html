@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+</head>
+<style>
+    .column img {
+        max-height: 400px;
+    }
+
+    .header {
+        margin-top: 3rem;
+        text-align: center;
+    }
+
+    .row {
+        padding: 2rem;
+    }
+
+    .image {
+        text-align: center;
+    }
+
+    .footer {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <main class="wrapper">
+        {% if cats %}
+        <header class="header" id="home">
+            <section class="container">
+                {% if have_cat %}
+                <h1>I have cats.</h1>
+                {% else %}
+                <h1>I have some sort of data, idk</h1>
+                {% endif %}
+            </section>
+        </header>
+
+        <section class="container">
+            {% for cat in cats %}
+            <div class="row">
+                <div class="column image"><img src="/cat/{{ cat['image'].name }}">
+                </div>
+                <div class="column">
+                    <p>
+                        {% if cat['data']['is_cat'] %}Cat.{% else %}Not cat.{% endif %}
+                    </p>
+                    <p>
+                        Image labels: {{ cat['data']['labels'] | join(', ')}}.
+                    </p>
+                    <p>
+                        {% for k in cat['data']['image_details']%}{{k |title}}: {{cat['data']['image_details'][k]}}. {%
+                        endfor %}
+                    </p>
+
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+        <footer class="footer">
+            <section class="container">
+                <div class="row">
+                    <div class="column">
+                        Made with{% if not have_cat %}out{% endif %} 🐈 with Google Cloud
+                    </div>
+                </div>
+            </section>
+        </footer>
+        {% else %}
+        <section class="container">
+            <div class="row">
+                <div class="column">I have no cats.</div>
+            </div>
+        </section>
+        {% endif %}
+    </main>
+</body>
+
+</html>
