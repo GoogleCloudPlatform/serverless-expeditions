@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "251dce20-bd8f-4897-a09a-f62c3b7f4e09",
+		"name": "Artist REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get artist 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rest-api-3ap6wvqypa-uc.a.run.app/artist/1",
+					"protocol": "https",
+					"host": [
+						"rest-api-3ap6wvqypa-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"artist",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get artist 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rest-api-3ap6wvqypa-uc.a.run.app/artist/2",
+					"protocol": "https",
+					"host": [
+						"rest-api-3ap6wvqypa-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"artist",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update artist 1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1\",\n    \"movement\": \"Surrealism\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rest-api-3ap6wvqypa-uc.a.run.app/artist",
+					"protocol": "https",
+					"host": [
+						"rest-api-3ap6wvqypa-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"artist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View cache",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rest-api-3ap6wvqypa-uc.a.run.app/cache",
+					"protocol": "https",
+					"host": [
+						"rest-api-3ap6wvqypa-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"cache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View database",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rest-api-3ap6wvqypa-uc.a.run.app/database",
+					"protocol": "https",
+					"host": [
+						"rest-api-3ap6wvqypa-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"database"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flush cache",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://rest-api-3ap6wvqypa-uc.a.run.app/flush-cache",
+					"protocol": "https",
+					"host": [
+						"rest-api-3ap6wvqypa-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"flush-cache"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
