@@ -1,0 +1,15 @@
+{
+  "name": "critterwatch-rest-api",
+  "version": "1.0.0",
+  "description": "REST API to access photo taken by CritterWatch cameras",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx @google-cloud/functions-framework"
+  },
+  "author": "Martin Omander",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/firestore": "^3.8.5",
+    "@google-cloud/functions-framework": "^1.7.1"
+  }
+}
