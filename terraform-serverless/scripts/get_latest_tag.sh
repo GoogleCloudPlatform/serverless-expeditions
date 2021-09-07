@@ -3,7 +3,7 @@
 # WORKAROUND SCRIPT
 
 # The Terraform Google provider (as of 3.53.0) provides no way to get
-# information about images in the Container regsitry.
+# information about images in the Container registry.
 
 # If Terraform sees the "latest" tag, it takes no action, even if the latest
 # image has changed since last run.
