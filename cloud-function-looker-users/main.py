@@ -20,7 +20,7 @@ import google.auth
 import looker_sdk
 sdk = looker_sdk.init40()
 
-# [START APPROACH 1: Using a POST request]
+# [START APPROACH 1: Using a POST request for the main function]
 def main(request):
   """Take email from JSON body of a POST request, and use the email value 
   as an input for looker_user_provision() function"""
@@ -31,10 +31,10 @@ def main(request):
     return result 
   except:
     return 'Please provide JSON in the format of {"email":"test@test.com"}'
-# [END APPROACH 1: Using a POST request]
+# [END APPROACH 1: Using a POST request for the main function]
 
 
-# [START APPROACH 2: Reading from a Google Sheet]
+# [START APPROACH 2: Reading from a Google Sheet for the main function]
 def main_gsheet(request):
   """Take email from a column inside an existing Google Sheet"""
   try: 
@@ -69,8 +69,7 @@ def get_email_from_sheet():
   all_emails = result.get('values', []) 
   return all_emails 
 
-# [END APPROACH 2: Reading from a Google Sheet]
-
+# [END APPROACH 2: Reading from a Google Sheet for the main function]
 
 # [START manage_looker_users(email)]
 def manage_looker_users(email):
@@ -115,4 +114,4 @@ def create_users(email):
   # Send a welcome/setup email
   sdk.send_user_credentials_email_password_reset(user_id=new_user["id"])
   
-# [START manage_looker_users(email)]
+# [END manage_looker_users(email)]

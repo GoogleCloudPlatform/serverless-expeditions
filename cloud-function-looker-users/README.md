@@ -24,7 +24,7 @@ The following steps assume deployment using Google Cloud UI Console. Check out [
 
 1. Obtain a [Looker API3 Key](https://docs.looker.com/admin-options/settings/users#api3_keys)
 
-2. Follow [instruction here](https://cloud.google.com/functions/docs/quickstart-python) to create a new Google Cloud Function. For this example, we recommend allocating 256MB memory, and using Python 3.7 
+2. Follow [instruction here](https://cloud.google.com/functions/docs/quickstart-python) to create a new Google Cloud Function. For this example, we recommend allocating 256MB memory, and using Python 3.7
 
 3. If using Google Sheet: Grant "Viewer" permission to the email address associated with the "Runtime service account" in Cloud Functions. The recommendation is to use the [Default App Engine Service Account](https://cloud.google.com/appengine/docs/standard/python/service-account) and share its email (`YOUR_PROJECT_ID@appspot.gserviceaccount.com`) to the Google Sheet
 
