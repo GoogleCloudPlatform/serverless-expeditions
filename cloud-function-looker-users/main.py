@@ -54,7 +54,7 @@ def get_email_from_sheet():
   """
   # Get the key of an existing Google Sheet from the URL. 
   # Example: https://docs.google.com/spreadsheets/d/[KEY HERE]/edit#gid=111
-  SAMPLE_SPREADSHEET_ID = "1irNXYuGI8UoBionNcLMr9F-JwZDDHS6LRQjpoobLkbs"
+  SAMPLE_SPREADSHEET_ID = "foo"
 
   # Google Sheet Range: https://developers.google.com/sheets/api/samples/reading
   SAMPLE_RANGE_NAME = "Sheet1!B:B" # all cells in column B, Sheet1
