@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Game Tracker</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <link rel="stylesheet" href="{% static 'custom.css' %}">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-3">
+                {% block title %}{% endblock %}
+            </h1>
+
+            <h2 class="subtitle">
+                {% block subtitle %}{% endblock %}
+            </h1>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                {% if games %}
+                <div class="column">
+                    <nav class="panel">
+                        <p class="panel-heading">
+                            Filter by Game
+                        </p>
+                        {% for game in games %}
+                            <a class="panel-block {% if filtered_game == game %}is-active{%endif%}" href="/{{game.name}}">
+                                {{game.icon}} {{game.name}}
+                            </a>
+                        {% endfor %}
+                        <a class="panel-block" href="/">Reset filter</a>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    Make with <a href="https://djangoproject.com">🦄 Django</a> and <a href="https://bulma.io/">Bulma.io</a>
+                    {% if debug %}<br><code>{{debug}}</code>{%endif%}
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

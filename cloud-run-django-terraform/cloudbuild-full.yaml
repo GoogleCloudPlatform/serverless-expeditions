@@ -1,0 +1,50 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "${_IMAGE_NAME}", "."]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push",  "${_IMAGE_NAME}"]
+
+  - name: "gcr.io/google-appengine/exec-wrapper"
+    args:
+      [
+        "-i", "${_IMAGE_NAME}",
+        "-s", "${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME}",
+        "--",
+        "python",
+        "manage.py",
+        "migrate",
+      ]
+
+  - name: "gcr.io/google-appengine/exec-wrapper"
+    args:
+      [
+        "-i", "${_IMAGE_NAME}",
+        "-s", "${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME}",
+        "--",
+        "python",
+        "manage.py",
+        "collectstatic",
+        "--no-input",
+      ]
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      [
+        "run",
+        "deploy",
+        "${_SERVICE_NAME}",
+        "--image=${_IMAGE_NAME}",
+        "--region=${_REGION}",
+        "--platform=managed",
+      ]
+
+options:
+  dynamic_substitutions: true
+
+substitutions:
+  _SERVICE_NAME: "gametracker"
+  _REGION: "us-central1"
+  _INSTANCE_NAME: "postgres"
+  _IMAGE_NAME: gcr.io/${PROJECT_ID}/${_SERVICE_NAME}
