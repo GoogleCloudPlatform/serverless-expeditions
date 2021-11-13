@@ -1,6 +1,6 @@
 # Cloud Function: Looker Users
 
-This repository contains a [Google Cloud Function](https://cloud.google.com/functions) that leverages Looker Python SDK and Google Sheet API to manage users. [Looker](https://looker.com/), part of Google Cloud Platform, is a business intelligence and big data analytics platform that helps you easily explore, analyze and share real-time business analytics.
+This repository contains a [Google Cloud Function](https://cloud.google.com/functions) that leverages Looker Python SDK and Google Sheet API to automate the process of creating new users in Looker. [Looker](https://looker.com/), part of Google Cloud Platform, is a business intelligence and big data analytics platform that helps users easily explore, analyze and share real-time business analytics.
 
 The repository can be used as a starter template to build serverless microservices that interact with Looker through the following workflow:
 
@@ -8,15 +8,7 @@ The repository can be used as a starter template to build serverless microservic
 2. Initialize the Looker Python SDK
 3. Call Looker SDK methods and build custom logic to manage users, content, queries, etc.
 
-In this repository, the `main.py` file takes an email address as an input and checks if this email has been registered with an existing Looker user. If a current user is found, an email to reset the password will be sent to the user. Otherwise, a new user will be created, and a setup email will be sent.
-
-Check out [Looker's Python SDK examples](https://github.com/looker-open-source/sdk-codegen/tree/main/examples/python) and [Looker Developer Portal](https://developers.looker.com/) for more code examples.
-
-## Demo
-
-<p align="center">
-  <img src="https://storage.googleapis.com/tutorials-img/Cloud%20Function%20Demo%20-%20SD%20480p.gif" alt="Demo">
-</p>
+In this repository, the `main.py` function reads email addresses from a Google Sheet, and make new Looker users for these email addresses. For an advaned use case with searching if emails have been used for existing users and send resetting password email, check out the code in [Looker's Python SDK examples](https://github.com/looker-open-source/sdk-codegen/tree/main/examples/python/cloud-function-user-provision)
 
 ## Setup
 
@@ -24,9 +16,9 @@ The following steps assume deployment using Google Cloud UI Console. Check out [
 
 1. Obtain a [Looker API3 Key](https://docs.looker.com/admin-options/settings/users#api3_keys)
 
-2. Follow [instruction here](https://cloud.google.com/functions/docs/quickstart-python) to create a new Google Cloud Function. For this example, we recommend allocating 256MB memory, and using Python 3.7
+2. Follow [instruction here](https://cloud.google.com/functions/docs/quickstart-python) to create a new Google Cloud Function. For this example, we recommend allocating 256MB memory and using Python 3.7
 
-3. If using Google Sheet: Grant "Viewer" permission to the email address associated with the "Runtime service account" in Cloud Functions. The recommendation is to use the [Default App Engine Service Account](https://cloud.google.com/appengine/docs/standard/python/service-account) and share its email (`YOUR_PROJECT_ID@appspot.gserviceaccount.com`) to the Google Sheet
+3. In the Google Sheet that stores email addresses, grant "Viewer" permission to the email address associated with the "Runtime service account" of this Cloud Functions. The recommendation is to use the [Default App Engine Service Account](https://cloud.google.com/appengine/docs/standard/python/service-account) and share its email (`YOUR_PROJECT_ID@appspot.gserviceaccount.com`) to the Google Sheet
 
 4. Configure runtime environment variables using the Cloud Function UI: Edit > Configuration > Runtime, build, connections and security settings > Runtime environment variables. Alternatively, environment variables can be configured through the `os` module or a `.ini` file. Check [Configuring Looker Python SDK](https://github.com/looker-open-source/sdk-codegen/tree/main/python#configuring-the-sdk) for more information
 
