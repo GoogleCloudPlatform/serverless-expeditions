@@ -1,5 +1,5 @@
-# Applies Database and Static Migrations
-
+# cloudbuild-migrate.yaml
+# Step 13: Run migrations and prepare static files
 steps:
   - name: "gcr.io/google-appengine/exec-wrapper"
     args:
