@@ -1,3 +1,4 @@
+# Step 1: Activate Google Cloud
 terraform {
   required_providers {
     google = {
@@ -7,6 +8,7 @@ terraform {
   }
 }
 
+# Step 2: Set up variables
 provider "google" {
   project = var.project
   region  = var.region
@@ -33,6 +35,7 @@ variable "service" {
   description = "The name of the service"
 }
 
+# Step 3: Activate service APIs
 resource "google_project_service" "run" {
   service            = "run.googleapis.com"
   disable_on_destroy = false
@@ -63,10 +66,14 @@ resource "google_project_service" "secretmanager" {
   disable_on_destroy = false
 }
 
+
+# Step 4: Create a custom Service Account
 resource "google_service_account" "django" {
   account_id = "django"
 }
 
+
+# Step 5: Create the database
 resource "random_password" "database_password" {
   length  = 32
   special = false
@@ -94,11 +101,11 @@ resource "google_sql_user" "django" {
 }
 
 
+# Step 6: Create the secrets
 resource "google_storage_bucket" "media" {
   name     = "${var.project}-images"
   location = "US"
 }
-
 
 resource "random_password" "django_secret_key" {
   special = false
@@ -115,6 +122,7 @@ resource "google_secret_manager_secret" "django_settings" {
 
 }
 
+# Step 7: Prepare the secrets for Django
 resource "google_secret_manager_secret_version" "django_settings" {
   secret = google_secret_manager_secret.django_settings.id
 
@@ -127,6 +135,7 @@ resource "google_secret_manager_secret_version" "django_settings" {
   })
 }
 
+# Step 8: Expand Service Account permissions
 resource "google_secret_manager_secret_iam_binding" "django_settings" {
   secret_id = google_secret_manager_secret.django_settings.id
   role      = "roles/secretmanager.secretAccessor"
@@ -139,6 +148,7 @@ locals {
 }
 
 
+# Step 9: Populate secrets
 resource "random_password" "superuser_password" {
   length  = 32
   special = false
@@ -164,7 +174,7 @@ resource "google_secret_manager_secret_iam_binding" "superuser_password" {
 }
 
 
-
+# Step 10: Create Cloud Run service
 resource "google_cloud_run_service" "service" {
   name                       = var.service
   location                   = var.region
@@ -191,9 +201,10 @@ resource "google_cloud_run_service" "service" {
     percent         = 100
     latest_revision = true
   }
-
 }
 
+
+# Step 11: Specify Cloud Run permissions
 data "google_iam_policy" "noauth" {
   binding {
     role = "roles/run.invoker"
@@ -212,6 +223,7 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
 }
 
 
+# Step 12: Grant access to the database
 resource "google_project_iam_binding" "service_permissions" {
   for_each = toset([
     "run.admin", "cloudsql.client"
@@ -229,6 +241,8 @@ resource "google_service_account_iam_binding" "cloudbuild_sa" {
   members = [local.cloudbuild_serviceaccount]
 }
 
+
+# Step 14: View final output
 output "superuser_password" {
   value     = google_secret_manager_secret_version.superuser_password.secret_data
   sensitive = true
