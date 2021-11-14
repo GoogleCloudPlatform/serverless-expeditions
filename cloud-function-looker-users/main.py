@@ -1,12 +1,3 @@
-"""This Cloud Function automates the process of creating new users in Looker 
-by using Google Sheet and Looker Python SDK. The main function reads email 
-addresses from a Google Sheet and makes new Looker users for these emails.
-
-For an advanced use case with searching if an email is associated with 
-existing users and resetting passwords, check out the code in Looker 
-Python SDK's example: https://bit.ly/looker-python-sdk-user-examples
-"""
-
 from googleapiclient.discovery import build
 import google.auth
 import looker_sdk
@@ -24,8 +15,8 @@ def main(request):
     return 'An error occurred.'
 
 def get_email_from_sheet():
-  """ Authenticate to an existing Google Sheet using the default runtime 
-  service account and extract the email address from a cell inside the sheet.
+  """Authenticate to an existing Google Sheet using the default runtime 
+  service account and read all email addresses from a column inside the sheet.
   Refer to README.md for details about using Default App Engine Service Account 
   for authentication. 
   """
@@ -41,12 +32,11 @@ def get_email_from_sheet():
   sheet = service.spreadsheets()
   result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
                                 range=SAMPLE_RANGE_NAME).execute()  
-  
-  # `all_emails` will be a list of lists ([['email1'], ['email2'], ['email3']])
   all_emails = result.get('values', []) 
   return all_emails 
 
 def create_users(email):
+  """Use Looker Python SDK to make new users"""
   new_user = sdk.create_user(
             body=looker_sdk.models40.WriteUser(
                 credentials_email=looker_sdk.models40.WriteCredentialsEmail(
@@ -57,7 +47,6 @@ def create_users(email):
                 models_dir_validated=False
             )
         )
-
   # Create email credentials for the new user
   sdk.create_user_credentials_email(
                 user_id=new_user.id,
@@ -65,7 +54,6 @@ def create_users(email):
                     email=email,
                     forced_password_reset_at_next_login=False
                 ))
-
   # Send a welcome/setup email
   sdk.send_user_credentials_email_password_reset(user_id=new_user["id"])
     

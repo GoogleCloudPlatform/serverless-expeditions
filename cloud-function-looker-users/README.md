@@ -8,7 +8,7 @@ The repository can be used as a starter template to build serverless microservic
 2. Initialize the Looker Python SDK
 3. Call Looker SDK methods and build custom logic to manage users, content, queries, etc.
 
-In this repository, the `main.py` function reads email addresses from a Google Sheet, and make new Looker users for these email addresses. For an advaned use case with searching if emails have been used for existing users and send resetting password email, check out the code in [Looker's Python SDK examples](https://github.com/looker-open-source/sdk-codegen/tree/main/examples/python/cloud-function-user-provision)
+In this repository, the `main.py` function reads email addresses from a Google Sheet and makes new Looker users for these email addresses. For an advanced use case with searching if emails have been used for existing users and send resetting password email, check out the code in [Looker's Python SDK examples](https://github.com/looker-open-source/sdk-codegen/tree/main/examples/python/cloud-function-user-provision)
 
 ## Setup
 
@@ -16,7 +16,7 @@ The following steps assume deployment using Google Cloud UI Console. Check out [
 
 1. Obtain a [Looker API3 Key](https://docs.looker.com/admin-options/settings/users#api3_keys)
 
-2. Follow [instruction here](https://cloud.google.com/functions/docs/quickstart-python) to create a new Google Cloud Function. For this example, we recommend allocating 256MB memory and using Python 3.7
+2. Follow [instruction here](https://cloud.google.com/functions/docs/quickstart-python) to create a new Google Cloud Function. For this example, we recommend allocating 256MB of memory and using Python 3.7
 
 3. In the Google Sheet that stores email addresses, grant "Viewer" permission to the email address associated with the "Runtime service account" of this Cloud Functions. The recommendation is to use the [Default App Engine Service Account](https://cloud.google.com/appengine/docs/standard/python/service-account) and share its email (`YOUR_PROJECT_ID@appspot.gserviceaccount.com`) to the Google Sheet
 
