@@ -1,0 +1,67 @@
+{% extends "default.html" %}
+{% block title %}
+    {% if filtered_game %}
+        {{filtered_game.icon}} {{filtered_game.name}}
+    {% else %}
+        🎲 Game Tracker
+    {% endif %}
+{% endblock %}
+{% block subtitle %}
+    {% if filtered_game %}
+        {{filtered_game.description}}
+    {% endif %}
+{% endblock %}
+{% block content %}
+    {% if matches %}
+        <h4 class="title is-4">Win Rates</h2>
+        <table class="table">
+            <thead><th>Player</th><th>Win Rate</th></thead>
+            {% for row in winrates %}
+                <tr>
+                    <td>{{row.player}}</td>
+                    <td align="right">{{row.rate}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h4 class="title is-4">Records</h2>
+        <table class="table">
+            <thead>
+                <th>Date</th>
+                {% if not filtered_game %}<th>Game</th>{% endif %}
+                {% for player in players %}<th>{{player.name}}</th>{% endfor %}
+                <th>Notes</th>
+            </thead>
+            {% for match in matches %}
+                <tr>
+                    <td>{{match.datetime|date:"M d, Y"}}</td>
+                    {% if not filtered_game %}<td>{{match.game.name}}</td>{%endif %}
+                    {% for player in players %}
+                        <td class="results {% if player in match.players %}player{% endif %}">
+                            {% if player == match.winner %}🏆{% endif %}
+                        </td>
+                    {% endfor %}
+                    <td>{{match.notes}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <hr>
+        <br>
+        <a href="{% url 'admin:gametracker_match_add'%}{% if filtered_name%}?game={{filtered_game.pk}}{%endif%}">Add new {%if filtered_game%}{{filtered_game.name}}{%else%}Match{%endif%} result.</a>
+
+        {% if filtered_game %}<br><a href="/">Go to all results.</a>{% endif %}
+    {% else %}
+        {% if error %}
+            <div class="notification is-danger is-light">
+                {{error}}. <a href="{% url 'admin:gametracker_game_add'%}?name={{game_name}}">Add it.</a>
+            </div>
+        {% else %}
+            {% if games %}
+                No games played{% if filtered_game%} for {{filtered_game.name}}{%endif%}.
+                <a href="{% url 'admin:gametracker_match_add'%}{% if filtered_name%}?game={{filtered_game.pk}}{%endif%}">Add one.</a>
+            {% else %}
+                No games known. <a href="{% url 'admin:gametracker_game_add'%}">Add one.</a>
+            {% endif %}
+        {% endif %}
+        <br>
+    {% endif %}
+{% endblock %}
