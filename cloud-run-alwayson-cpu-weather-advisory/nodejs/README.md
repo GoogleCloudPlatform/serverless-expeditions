@@ -6,18 +6,16 @@ This is the corresponding code repo for the [Serverless Expeditions](https://goo
 
 File | Description
 --- | ---
-[`main.js`](index.js) | main application file
+[`main.js`](main.js) | main application file
 [`templates/index.html`](templates/index.html) | application HTML template
 [`package.json`](package.json) | 3rd-party package requirements file
 [`.gcloudignore`](.gcloudignore) | files to exclude deploying to the cloud (administrative)
 `README.md` | this file (administrative)
 
-Below are the required settings and instructions to deploy this application.
+You can run this locally or on Cloud Run. Below are the required settings and instructions to do each.
 
 
 ## **Local Express server (Node 10, 17)**
-
-**TL;DR:** application files (`index.js` &amp; `package.json`) plus `credentials.json`. Instructions:
 
 1. **Run** `npm install` (to install packages locally)
 1. **Run** `gcloud auth application-default login` to set your credentials
@@ -25,8 +23,6 @@ Below are the required settings and instructions to deploy this application.
 
 
 ## **Cloud Run (Node 10+ via Cloud Buildpacks)**
-
-**TL;DR:** Uses only the application files. Instruction(s):
 
 1. **Run** `gcloud run deploy weater --allow-unauthenticated --platform managed` to deploy to Cloud Run; optionally add `--source . --region REGION` for non-interactive deploy
     - A `Dockerfile` is optional, but if you wish to create one, place it in the top-level folder so the build system can access it.
