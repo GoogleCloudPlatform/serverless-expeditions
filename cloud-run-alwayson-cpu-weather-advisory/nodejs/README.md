@@ -32,6 +32,20 @@ Below are the required settings and instructions to deploy this application.
     - A `Dockerfile` is optional, but if you wish to create one, place it in the top-level folder so the build system can access it.
 
 
+## The application itself
+
+The app consists of a simple web page prompting the user for a US state (or territory) abbreviation to fetch the latest weather advisories from the US NOAA Weather API. The results along with the selected state are presented along with an empty form for a follow-up request if desired. Results are cached for 15 minutes.
+
+This is what the app UI looks like upon an initial `GET` of its home page:
+
+![GET app screenshot](https://user-images.githubusercontent.com/1102504/153354509-3afdad1a-d5ca-4463-91fe-ee95d3e0b150.png)
+
+
+This is what the app looks like after completing one weather request (for Maryland):
+
+![POST app screenshot](https://user-images.githubusercontent.com/1102504/153354523-51a58bb6-66b3-4251-95cd-63217ee86edc.png)
+
+
 ## References
 
 - [Serverless Expeditions](https://goo.gle/ServerlessExpeditions) video series
