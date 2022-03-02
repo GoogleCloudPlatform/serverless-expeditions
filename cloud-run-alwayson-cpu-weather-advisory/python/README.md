@@ -33,6 +33,7 @@ You can run this locally or on Cloud Run. Below are the required settings and in
 
 ## References
 
+- [Python 3 Cloud Run quickstart](https://cloud.google.com/run/docs/quickstarts/build-and-deploy/python)
 - [Google Cloud support for Python](https://cloud.google.com/python)
 - [Flask](https://flask.palletsprojects.com)
 

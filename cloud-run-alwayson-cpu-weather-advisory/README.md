@@ -29,6 +29,5 @@ This is what the app looks like after completing one weather request (for Maryla
 - [Serverless Expeditions](https://goo.gle/ServerlessExpeditions) video series
 - [Cloud Run Always-on CPU Allocation](https://cloud.google.com/run/docs/configuring/cpu-allocation)
 - [Always-on CPU launch announcement](https://cloud.google.com/blog/products/serverless/cloud-run-gets-always-on-cpu-allocation)
-- [Node.js Cloud Run quickstart](https://cloud.google.com/run/docs/quickstarts/build-and-deploy/nodejs)
 - [Cloud Run documentation](https://cloud.google.com/run/docs)
 - [Cloud Run home page](http://cloud.run)
