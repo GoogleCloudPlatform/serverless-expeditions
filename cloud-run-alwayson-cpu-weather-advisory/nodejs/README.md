@@ -1,6 +1,7 @@
 # Cloud Run Always-on CPU Allocation Weather Advisory app
 
-This is the corresponding code repo for the [Serverless Expeditions](https://goo.gle/ServerlessExpeditions) video covering the [Cloud Run Always-on CPU Allocation feature](https://cloud.google.com/run/docs/configuring/cpu-allocation) that [launched in Fall 2021](https://cloud.google.com/blog/products/serverless/cloud-run-gets-always-on-cpu-allocation). It is currently available in Node.js.
+This is the Node.js/JavaScript version of the sample app. It has been tested locally with Node 10 and 17, and deploys to Cloud Run with the current supported version (Node 14 at the time of this writing). The app is also available in [Python](../python).
+
 
 ## Application files
 
@@ -22,9 +23,9 @@ You can run this locally or on Cloud Run. Below are the required settings and in
 1. **Run** `npm start` to run locally
 
 
-## **Cloud Run (Node 10+ via Cloud Buildpacks)**
+## **Cloud Run (Node 14 via Cloud Buildpacks)**
 
-1. **Run** `gcloud run deploy weater --allow-unauthenticated --platform managed` to deploy to Cloud Run; optionally add `--source . --region REGION` for non-interactive deploy
+1. **Run** `gcloud run deploy weather --allow-unauthenticated --platform managed` to deploy to Cloud Run; optionally add `--source . --region REGION` for non-interactive deploy
     - A `Dockerfile` is optional, but if you wish to create one, place it in the top-level folder so the build system can access it.
 
 
@@ -44,11 +45,6 @@ This is what the app looks like after completing one weather request (for Maryla
 
 ## References
 
-- [Serverless Expeditions](https://goo.gle/ServerlessExpeditions) video series
-- [Cloud Run Always-on CPU Allocation](https://cloud.google.com/run/docs/configuring/cpu-allocation)
-- [Always-on CPU launch announcement](https://cloud.google.com/blog/products/serverless/cloud-run-gets-always-on-cpu-allocation)
-- [Node.js Cloud Run quickstart](https://cloud.google.com/run/docs/quickstarts/build-and-deploy/nodejs)
-- [Cloud Run documentation](https://cloud.google.com/run/docs)
-- [Cloud Run home page](http://cloud.run)
+- [Google Cloud support for Node.js](https://cloud.google.com/nodejs)
 - [Express.js](https://expressjs.com)
 

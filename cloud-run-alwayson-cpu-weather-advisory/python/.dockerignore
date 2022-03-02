@@ -1,0 +1,52 @@
+.gcloudignore
+
+# Source code control files
+.git/
+.gitignore
+.hgignore
+.hg/
+
+# JavaScript/Node.js
+node_modules/
+test/
+package-lock.json
+
+# Python
+*.py[cod]
+__pycache__/
+/setup.cfg
+
+# README/text files
+LICENSE
+*.md
+
+# Installer logs
+pip-log.txt
+
+# Tests/results
+.nox/
+.pytest_cache/
+noxfile.py
+test_translate.py
+.coverage
+coverage.xml
+*sponge_log.xml
+system_tests/local_test_setup
+pylintrc
+pylintrc.test
+
+# Mac
+.DS_Store
+
+# IDEs/editors
+*.sw[op]
+*~
+.vscode
+.idea
+
+# Built documentation
+docs/_build
+docs.metadata
+
+# Virtual environment
+env/

@@ -21,9 +21,10 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 nunjucks.configure('templates', {autoescape: true, express: app});
 const DATASTORE = new Datastore();
-
-const port = process.env.PORT || 8080;
-const url = 'https://api.weather.gov/alerts/active?area=';
+const DEFAULT = 'CA';
+const MINUTE = 60 * 1000;
+const PORT = process.env.PORT || 8080;
+const URL = 'https://api.weather.gov/alerts/active?area=';
 const STATES = [
     'AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL',
     'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA',
@@ -32,20 +33,23 @@ const STATES = [
     'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY',
 ];
 
-app.listen(port, () => {
-    console.log(`** Listening on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`** Listening on port ${PORT}`);
 });
 
 
+// get state alerts from cache
 async function getStateFromCache(state) {
-    const query = DATASTORE.createQuery('State').filter('state', '=', state);
+    const query = DATASTORE.createQuery('State')
+        .filter('__key__', '=', DATASTORE.key(['State', state]));
     const [results] = await DATASTORE.runQuery(query);
     return results.length ? results[0] : null;
 }
 
 
-async function stateIsInCache(state) {  // check data in-cache & fresh
-    const fma = new Date(new Date() - 15*60*1000);  // "15 minutes ago"
+// check if state alerts are in cache & "fresh"
+async function stateIsInCache(state) {
+    const fma = new Date(new Date() - 15*MINUTE);  // "15 minutes ago"
     const stateData = await getStateFromCache(state);
     const useCache = stateData ? (stateData.lastUpdate > fma) : false;
     console.log(useCache ? `** Cache fresh, use in-cache data (${state})` :
@@ -54,32 +58,30 @@ async function stateIsInCache(state) {  // check data in-cache & fresh
 }
 
 
-async function fetchState(state) {  // fetch state info from API
-    const api_rsp = await axios.get(url + state); // issue weather API request
+// fetch state weather alerts from API
+async function fetchState(state) {
+    const api_rsp = await axios.get(URL + state);  // call weather API
     const advisories = api_rsp.data.features;
-    const savedAdvisories = advisories.map(advisory => {
+    return advisories.map(advisory => {
         const prop = advisory.properties;
-        return {  // process each advisory
-            area: prop.areaDesc,
-            state: state,
-            headline: ('NWSheadline' in prop.parameters) ?
-                prop.parameters.NWSheadline[0] :
-                prop.headline,
-            effective: prop.effective,
-            expires: prop.expires,
+        return {  // extract/format relevant weather alert data
+            area:         prop.areaDesc,
+            headline:     ('NWSheadline' in prop.parameters) ?
+                prop.parameters.NWSheadline[0] : prop.headline,
+            effective:    prop.effective,
+            expires:      prop.expires,
             instructions: (!prop.instruction) ? '(none)' :
                 prop.instruction.replace(/\n/g, ' '),
         }
     });
-    return savedAdvisories;
 }
 
 
-async function cacheState(state, advisories) {  // cache state info
+// cache state weather alerts to Datastore
+async function cacheState(state, advisories) {
     const entity = {
         key: DATASTORE.key(['State', state]),
         data: {
-            state: state,
             advisories: advisories,
             lastUpdate: new Date(),  // last-fetched timestamp
         }
@@ -88,17 +90,26 @@ async function cacheState(state, advisories) {  // cache state info
 }
 
 
+// check if state in cache & fresh; fetch & cache if not
+async function processState(state) {
+    if (!(await stateIsInCache(state))) {
+        const advisories = await fetchState(state);
+        await cacheState(state, advisories);
+    }
+}
+
+
+// main application handler (GET/POST)
 app.all('/', async (req, rsp) => {
-    let context = {meth: req.method, state: 'CA'};
+    let context = {meth: req.method, state: DEFAULT};
+    // GET: render empty form
+    // POST: process user request, display results, render empty form
     if (req.method === 'POST') {
         let state;
         try {
-            state = req.body.state.trim().slice(0, 2).toUpperCase() || 'CA';
+            state = req.body.state.trim().slice(0, 2).toUpperCase() || DEFAULT;
             context.state = state;
-            if (!(await stateIsInCache(state))) {
-                const advisories = await fetchState(state);
-                await cacheState(state, advisories);
-            }
+            await processState(state);
             const stateData = await getStateFromCache(state);
             if (stateData) {
                 context.advs = stateData.advisories;
@@ -116,21 +127,19 @@ app.all('/', async (req, rsp) => {
 })
 
 
+// check each state and update cache as necessary
 async function updateCache() {
-    // check each state and update cache as necessary
     for (let state of STATES) {
-        if (!(await stateIsInCache(state))) {
-            const advisories = await fetchState(state);
-            await cacheState(state, advisories);
-        }
+        await processState(state);
     }
 }
 
 
-// always-on CPU refreshes cache every 5 minutes (max 3x per always-on CPU)
+// always-on CPU refreshes cache every 5 minutes
+// (max 3x per always-on CPU re 15 min shutdown)
 setInterval(() => {
     updateCache();
-}, 300 * 1000);
+}, 5*MINUTE);
 
 
 module.exports = {
