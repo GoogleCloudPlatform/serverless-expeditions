@@ -1,0 +1,36 @@
+<!doctype html>
+<html><head><title>NOAA US Weather Advisory Daily (WAD) portal</title><body>
+<style>
+body {
+  font-family: Verdana, Helvetica, sans-serif;
+  background-color: #DDDDDD;
+}
+</style>
+<h2>NOAA US Weather Advisory Daily (WAD) portal</h2>
+
+{% if error %}
+   <i>{{ error }}</i>
+{% else %}
+    {% if meth == 'POST' %}
+        {% if advs|length %}
+            <h4>Current weather advisories for {{ state }}</h4>
+            {% for adv in advs %}
+                <pre>
+                {{ loop.index }}) {{ adv.area }}{% if state not in adv.area %}, {{ state }}{% endif %}
+
+                Advisory/alert:    {{ adv.headline }}
+                Effective as of:   {{ adv.effective }}
+                Expires as of:     {{ adv.expires }}
+                Instructions:      {{ adv.instructions }}
+                </pre>
+            {% endfor %}
+        {% else %}
+            <i>ALERT: no weather advisories for {{ state }} at this time</i>
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+<h4>Enter 2-letter US state abbreviation for weather advisories (ex: NY, WA; default: CA)</i>:
+<form method="POST"><input name="state" value={{ state }}><input type="submit"></form>
+</h4>
+</body></html>
