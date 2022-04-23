@@ -13,7 +13,7 @@ File | Description
 [`.gcloudignore`](.gcloudignore) | files to exclude deploying to the cloud (administrative)
 `README.md` | this file (administrative)
 
-You can run this locally or on Cloud Run. Below are the required settings and instructions to do each.
+You can run this app locally or deploy it to Cloud Run. Below are the required settings and instructions for each.
 
 
 ## **Local Flask server (Python 2 or 3)**
@@ -27,7 +27,7 @@ You can run this locally or on Cloud Run. Below are the required settings and in
 
 1. **Run** `gcloud run deploy weather --allow-unauthenticated --platform managed` to deploy to Cloud Run; optionally add `--source . --region REGION` for non-interactive deploy
     - A `Dockerfile` is optional, but if you wish to create one, place it in the top-level folder so the build system can access it.
-    - Deploying this as a Python 2 to Cloud Run requires a [supporting `Dockerfile`](https://github.com/googlecodelabs/cloud-nebulous-serverless/blob/main/cloud/python/Dockerfile).
+    - Deploying this as a Python 2 app to Cloud Run requires a [supporting `Dockerfile`](https://github.com/googlecodelabs/cloud-nebulous-serverless/blob/main/cloud/python/Dockerfile).
 
 
 

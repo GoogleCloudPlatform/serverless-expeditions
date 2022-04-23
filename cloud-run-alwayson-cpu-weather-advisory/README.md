@@ -1,11 +1,13 @@
 # Cloud Run Always-on CPU Allocation Weather Advisory app
 
-This is the corresponding code repo for the [Serverless Expeditions](https://goo.gle/ServerlessExpeditions) video covering the [Cloud Run Always-on CPU Allocation feature](https://cloud.google.com/run/docs/configuring/cpu-allocation) that [launched in Fall 2021](https://cloud.google.com/blog/products/serverless/cloud-run-gets-always-on-cpu-allocation).
+This is the corresponding code repo for the [Serverless Expeditions](https://goo.gle/ServerlessExpeditions) [video](http://youtu.be/ul1cGarS23M) covering the [Cloud Run Always-on CPU Allocation feature](https://cloud.google.com/run/docs/configuring/cpu-allocation) that [launched in Fall 2021](https://cloud.google.com/blog/products/serverless/cloud-run-gets-always-on-cpu-allocation).
+
+More information on this sample can be found in the video's [announcement blog post](https://cloud.google.com/blog/topics/developers-practitioners/use-cloud-run-always-cpu-allocation-background-work) (social post [here](https://twitter.com/GoogleCloudTech/status/1511450354189316099)).
 
 
 ## The code
 
-It is available in [Python](python) and [Node.js](nodejs).
+This app is available in [Python](python) and [Node.js](nodejs).
 
 Language | Versions | Deployment | Framework
 --- | --- | --- | ---
@@ -44,6 +46,18 @@ This is what the app UI looks like upon an initial `GET` of its home page:
 This is what the app looks like after completing one weather request (for Maryland):
 
 ![POST app screenshot](https://user-images.githubusercontent.com/1102504/153354523-51a58bb6-66b3-4251-95cd-63217ee86edc.png)
+
+
+## Cost
+
+Google Cloud Run is not a free service; [all applications now require an active billing account](https://cloud.google.com/appengine/docs/standard/payment-instrument) backed by a financial instrument (usually a credit card). However, Cloud Run (and other GCP products) do have an ["Always Free" tier](https://cloud.google.com/free/docs/gcp-free-tier#free-tier-usage-limits) and as long as you stay within those limits, you won't incur any charges. Also check the Cloud Run [pricing](https://cloud.google.com/run/pricing) and [quotas](https://cloud.google.com/run/quotas) pages for more information.
+
+Furthermore, deploying to GCP serverless platforms incur [minor build and storage costs](https://cloud.google.com/appengine/pricing#pricing-for-related-google-cloud-products). [Cloud Build](https://cloud.google.com/build/pricing) has its own free quota as does [Cloud Storage](https://cloud.google.com/storage/pricing#cloud-storage-always-free). For greater transparency, Cloud Build builds your application image which is than sent to the [Cloud Container Registry](https://cloud.google.com/container-registry/pricing), or [Artifact Registry](https://cloud.google.com/artifact-registry/pricing), its successor; storage of that image uses up some of that (Cloud Storage) quota as does network egress when transferring that image to the service you're deploying to. However you may live in region that does not have such a free tier, so be aware of your storage usage to minimize potential costs. (You may look at what storage you're using and how much, including deleting build artifacts via [your Cloud Storage browser](https://console.cloud.google.com/storage/browser).)
+
+
+## Cleanup
+
+As this is a sample app, you don't want to incur ongoing billing, so release its resources once you've completed your analysis of this app and its CPU allocation feature. You can [disable](https://cloud.google.com/run/docs/managing/services#disable) or [delete](https://cloud.google.com/run/docs/managing/services#delete) the Cloud Run service, or [shutdown your GCP project entirely](https://console.cloud.google.com/iam-admin/settings).
 
 
 ## References
