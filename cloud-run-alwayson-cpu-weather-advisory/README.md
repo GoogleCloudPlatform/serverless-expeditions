@@ -38,6 +38,8 @@ Other functions are either for support or administrative purposes. Specific info
 
 ## The application itself
 
+### Operation
+
 The app consists of a simple web page prompting the user for a US state (or territory) abbreviation to fetch the latest weather advisories from the US NOAA Weather API. The results along with the selected state are presented along with an empty form for a follow-up request if desired. Results are cached for 15 minutes.
 
 This is what the app UI looks like upon an initial `GET` of its home page:
@@ -46,6 +48,16 @@ This is what the app UI looks like upon an initial `GET` of its home page:
 This is what the app looks like after completing one weather request (for Maryland):
 
 ![POST app screenshot](https://user-images.githubusercontent.com/1102504/153354523-51a58bb6-66b3-4251-95cd-63217ee86edc.png)
+
+### Code
+
+The most interesting piece of code is probably `stateIsInCache()`. It has to check whether a state's weather advisories is currently cached as well as whether that cached entry is "fresh," meaning newer than 15 minutes.
+
+![stateIsInCache](https://user-images.githubusercontent.com/1102504/164938783-a28f31fc-8ea5-473d-bd69-1e6e4850e8d9.png)
+
+On the other hand, the most boring bit of code is the most critical, `updateCache()`. It leverages the "always-on CPU" allocation feature and is set to update the cache every 5 minutes until the container instance is shut down via `setInterval()`:
+
+![updateCache](https://user-images.githubusercontent.com/1102504/164938716-f30db4cf-fcde-46e6-b6cd-5f668a80943b.png)
 
 
 ## Costs
