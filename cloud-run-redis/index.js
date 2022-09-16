@@ -18,6 +18,7 @@ app.get('/artist/:id', async (req, res) => {
     const artist = await getArtistFromCache(id);
     if (artist) {
       res.json(artist);
+      return;
     }
     else {
       res.status(404).json({error: `Artist ${id} not found`});
