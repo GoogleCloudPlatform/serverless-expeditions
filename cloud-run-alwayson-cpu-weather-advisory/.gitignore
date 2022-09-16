@@ -1,0 +1,52 @@
+# Python
+*.py[cod]
+__pycache__/
+/setup.cfg
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+.eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Tests/results
+.nox/
+.pytest_cache/
+.cache
+.pytype
+.coverage
+coverage.xml
+*sponge_log.xml
+system_tests/local_test_setup
+
+# Mac
+.DS_Store
+
+# IDEs/editors
+*.sw[op]
+*~
+.vscode
+.idea
+
+# Built documentation
+docs/_build
+docs.metadata
+
+# Virtual environment
+env/

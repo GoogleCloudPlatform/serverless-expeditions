@@ -1,0 +1,14 @@
+.footer { 
+    padding-bottom: 3rem; /* make footer more square */
+}
+
+.results { 
+    text-align: center !important;
+}
+.results.notplayer { 
+    background: grey;
+}
+
+.panel-block.is-active { 
+    font-weight: bold;
+}

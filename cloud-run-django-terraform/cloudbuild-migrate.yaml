@@ -1,0 +1,34 @@
+# cloudbuild-migrate.yaml
+# Step 13: Run migrations and prepare static files
+steps:
+  - name: "gcr.io/google-appengine/exec-wrapper"
+    args:
+      [
+        "-i",
+        "gcr.io/$PROJECT_ID/${_SERVICE_NAME}",
+        "-s",
+        "${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME}",
+        "--",
+        "python",
+        "manage.py",
+        "migrate",
+      ]
+
+  - name: "gcr.io/google-appengine/exec-wrapper"
+    args:
+      [
+        "-i",
+        "gcr.io/$PROJECT_ID/${_SERVICE_NAME}",
+        "-s",
+        "${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME}",
+        "--",
+        "python",
+        "manage.py",
+        "collectstatic",
+        "--no-input",
+      ]
+
+substitutions:
+  _REGION: "us-central1"
+  _SERVICE_NAME: "gametracker"
+  _INSTANCE_NAME: "gametracker"
