@@ -1,0 +1,1 @@
+gcloud run deploy --source .
