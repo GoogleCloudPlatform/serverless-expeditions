@@ -1,5 +1,7 @@
-PROJECT_ID=
+AR_REGION=us-central1
+PROJECT_ID=  # YOUR GCP PROJECT ID GOES HERE
+AR_REPO_URL=$AR_REGION-docker.pkg.dev/$PROJECT_ID/my-serverless-app  
 
 gcloud builds submit \
-  --tag gcr.io/$PROJECT_ID/app \
+  --tag $AR_REPO_URL/website \
   --project $PROJECT_ID
