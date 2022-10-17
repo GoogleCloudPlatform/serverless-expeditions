@@ -23,5 +23,5 @@ app.listen(port, () => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Hello London!');
+  res.send(`Hello ${process.env.CITY}!`);
 })
