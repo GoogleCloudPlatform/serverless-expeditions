@@ -1,0 +1,31 @@
+# Tabs vs Spaces sample
+
+## How to build Docker container
+
+
+## How to Deploy
+
+
+## Migrations
+
+Before running the application, execute these schema migration queries
+
+```sql
+CREATE TABLE IF NOT EXISTS votes
+( vote_id SERIAL NOT NULL, time_cast timestamp NOT NULL,
+candidate VARCHAR(6) NOT NULL, PRIMARY KEY (vote_id) );
+
+CREATE TABLE IF NOT EXISTS totals
+( total_id SERIAL NOT NULL, candidate VARCHAR(6) NOT NULL,
+num_votes INT DEFAULT 0, PRIMARY KEY (total_id) );
+
+INSERT INTO totals (candidate, num_votes) VALUES ('TABS', 0);
+INSERT INTO totals (candidate, num_votes) VALUES ('SPACES', 0);
+
+```
+
+## Load testing
+
+### Installing Locust
+
+### Running the load test
