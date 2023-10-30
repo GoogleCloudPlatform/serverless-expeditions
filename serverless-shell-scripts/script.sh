@@ -1,4 +1,5 @@
-# Replace [BUCKET NAME] below with the name of your Google Cloud Storage bucket.
 set -e
-gcloud firestore export gs://[BUCKET NAME] --async
+npx playwright install firefox --with-deps
+wget https://raw.githubusercontent.com/kevin930321/BahAuto-Module/main/config.yml
+npx bahamut-automation -c config.yml
 echo All done!
