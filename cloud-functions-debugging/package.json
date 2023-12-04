@@ -9,7 +9,7 @@
   "author": "Martin Omander",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/firestore": "^3.8.5",
+    "@google-cloud/firestore": "^6.2.0",
     "@google-cloud/functions-framework": "^1.7.1"
   }
 }
