@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/veermuchandi/nodejs-todo-app#readme",
   "dependencies": {
-    "@google-cloud/firestore": "^6.0.0",
+    "@google-cloud/firestore": "^6.2.0",
     "@types/node": "^12.6.8",
     "body-parser": "^1.19.0",
     "ejs": "^2.5.6",
