@@ -1,5 +1,7 @@
 # Cloud Function: Looker Users
 
+** Video Tutorial: https://www.youtube.com/watch?v=hQMZ5w9v4aA **
+
 This repository contains a [Google Cloud Function](https://cloud.google.com/functions) that leverages Looker Python SDK and Google Sheet API to automate the process of creating new users in Looker. [Looker](https://looker.com/), part of Google Cloud Platform, is a business intelligence and big data analytics platform that helps users easily explore, analyze and share real-time business analytics.
 
 The repository can be used as a starter template to build serverless microservices that interact with Looker through the following workflow:
