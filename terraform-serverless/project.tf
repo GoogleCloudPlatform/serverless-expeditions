@@ -1,26 +1,26 @@
 # Enable services
 resource "google_project_service" "vision" {
-  service = "vision.googleapis.com"
+  service            = "vision.googleapis.com"
   disable_on_destroy = false
 }
 
 resource "google_project_service" "run" {
-  service = "run.googleapis.com"
+  service            = "run.googleapis.com"
   disable_on_destroy = false
 }
 
 resource "google_project_service" "iam" {
-  service = "iam.googleapis.com"
+  service            = "iam.googleapis.com"
   disable_on_destroy = false
 }
 
 resource "google_project_service" "cloudbuild" {
-  service = "cloudbuild.googleapis.com"
+  service            = "cloudbuild.googleapis.com"
   disable_on_destroy = false
 }
 
 resource "google_project_service" "cloudfunctions" {
-  service = "cloudfunctions.googleapis.com"
+  service            = "cloudfunctions.googleapis.com"
   disable_on_destroy = false
 }
 
@@ -33,7 +33,7 @@ resource "google_service_account" "cats_worker" {
 # Set permissions
 resource "google_project_iam_binding" "service_permissions" {
   for_each = toset([
-    "run.invoker", "cloudfunctions.invoker"
+    "run.invoker", "cloudfunctions.invoker", "artifactregistry.reader"
   ])
 
   role       = "roles/${each.key}"
