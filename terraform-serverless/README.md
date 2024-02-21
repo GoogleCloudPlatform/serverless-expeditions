@@ -15,7 +15,13 @@ To deploy using Terraform:
     ```
     gcloud builds submit
     ```
-
+  * Assuming you are using cloudshell. You need to set up cloudshell Role as the following steps:
+    1. Go to the IAM & Admin page in the Google Cloud Console.
+    1. Find the Compute Engine default service account in the list. This is usually in the format of YOUR_NUMBER-compute@developer.gserviceaccount.com.
+    1. Click on the pencil icon to edit the service account.
+    1.  Click on Add Another Role.
+    1. In the Select a role dropdown, search for ‘Create Service Accounts.
+    1.  Click on Save to save your changes.
   * Initialize and apply the Terraform manifests: 
 
     ```
