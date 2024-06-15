@@ -33,6 +33,6 @@
     "puppeteer": "^9.0.0",
     "sass-loader": "^7.1.0",
     "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.4.3"
+    "webpack-dev-server": "^2.11.5"
   }
 }
