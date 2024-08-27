@@ -159,4 +159,4 @@ if __name__ == "__main__":
 		debugFlag = True
 		print('Debug enabled')
 
-	app.run(debug=debugFlag, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+	app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
