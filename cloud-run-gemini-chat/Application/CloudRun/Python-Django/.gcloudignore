@@ -1,0 +1,14 @@
+__pycache__
+.dockerignore
+.pylintrc
+.gitignore
+.gcloudignore
+*.bat
+*.md
+*.sh
+*.swp
+LICENSE
+notes.txt
+save/
+venv/
+tools/

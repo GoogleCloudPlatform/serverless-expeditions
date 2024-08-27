@@ -1,0 +1,4 @@
+Django>=5.0.3
+django-extensions>=3.2.3
+google-cloud-secret-manager>=2.19
+markdown

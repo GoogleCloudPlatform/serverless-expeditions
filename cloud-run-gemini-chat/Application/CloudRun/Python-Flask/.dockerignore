@@ -1,0 +1,15 @@
+.dockerignore
+.gitignore
+.pylintrc
+Dockerfile
+LICENSE
+*.bat
+*.md
+*.sh
+**.swp
+notes.txt
+save/
+tools/
+venv/
+__pycache__
+x

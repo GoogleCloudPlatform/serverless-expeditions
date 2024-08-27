@@ -1,0 +1,28 @@
+{
+  "name": "geminiapp",
+  "version": "0.3.0",
+  "description": "This application implements the Gemini REST API using an API Key.",
+  "private": true,
+  "author": "John J. Hanley",
+  "license": "MIT",
+  "keywords": [
+    "Google",
+    "Gemini"
+  ],
+  "scripts": {
+    "start": "node ./bin/www",
+    "watch": "node --watch ./bin/www"
+  },
+  "dependencies": {
+    "@google-cloud/secret-manager": "^5.2.0",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.1.0",
+    "csrf-csrf": "^3.0.3",
+    "debug": "^2.6.9",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "http-errors": "^1.6.3",
+    "markdown-it": "^14.1.0",
+    "morgan": "^1.9.1"
+  }
+}
