@@ -304,7 +304,7 @@ st.warning("But first, let's setup the application in your Google Cloud environm
 with st.expander("Project Settings"):
     with st.form("Settings"):
         # init project id and quota project id
-        project_id = st.text_input("Project Id", "petroglyphs-nlp")
+        project_id = st.text_input("Project Id", "")
         os.environ["GOOGLE_CLOUD_QUOTA_PROJECT"] = project_id
 
         # init region
