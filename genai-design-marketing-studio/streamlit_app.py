@@ -34,10 +34,13 @@ mimetypes.init()
 ##########################################################
 
 @st.cache_resource()
-def load_prompts() -> None:
-    """Load the prompts library in the Streamlite session state"""
+def load_prompts() -> dict:
+    """
+    Load the prompts library in the Streamlite session state"
+    :return: prompts as a dict
+    ""
     with open("./prompts/prompts.json") as f:
-        st.session_state['prompts'] = json.load(f)
+        return json.load(f)
 
 
 def librarian_assistant(query: str) -> str:
@@ -284,6 +287,10 @@ def image_generation_ui(
 
 ##########################################################
 # APPLICATION USER INTERFACE AND BACKBONE
+
+# load the prompts from the resource files
+# and store them in the session state
+st.session_state['prompts'] = load_prompts()
 
 st.title(":dizzy: GenAI Creative Assistant")
 
