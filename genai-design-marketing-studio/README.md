@@ -27,5 +27,6 @@ The repository contains all the code needed to deploy the Design and Marketing p
   - the `cloudbuild.yaml` used by the Google Cloud Builds service. You must adapt this file to your configuration.
   - the `requirements.txt` which contains the libraries used by the application, notice how short it is.
 
-### How can you use this Design and Marketing Studio?
+## How can you use this Design and Marketing Studio?
 
+A short documentation is provided in the repository.
