@@ -15,8 +15,15 @@ The repository contains all the code needed to deploy the Design and Marketing p
 
 - Two Python files contain the generative engine and the user interface (made with Streamlit):
 
-  - generative.py: contains all the Generative AI code using the Vertex AI API (Gemini and Imagen3). You can see that the file is concise. It is the main advantage of using the Google Vertex AI APIs where all the long and difficult codes have already been written and tested by the Google teams, and run on the server side (in a serverless manner).
+  - `generative.py`: contains all the Generative AI code using the Vertex AI API (Gemini and Imagen3). You can see that the file is concise. It is the main advantage of using the Google Vertex AI APIs where all the long and difficult codes have already been written and tested by the Google teams, and run on the server side (in a serverless manner).
  
-  - streamlit_app.py: contains all the code needed to create the Streamlit application. Altogether, this quite rich application is made with only ~700 lines of Python.
- 
+  - `streamlit_app.py`: contains all the code needed to create the Streamlit application. Altogether, this quite rich application is made with only ~700 lines of Python.
+
+= The files needed to build the application with Google Builds
+
+  - the very standard `Dockerfile`
+  - the `cloudbuild.yaml` which is used by the Google Cloud Builds service
+  - the `requirements.txt` which contains the libraries used by the application, notice how short it is.
+
+
   
