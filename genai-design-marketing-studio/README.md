@@ -32,7 +32,7 @@ The repository contains all the code needed to deploy the Design and Marketing p
 ### How do you deploy the application on Google Cloud?
 
 The easiest way to deploy this application on your Google Cloud project is to:
-- build the image using the Docker file with Cloud Build and store it in your Artifact Repository
+- build the image with Cloud Build using the Docker file  and store it in your Artifact Repository
 - deploy the service using Cloud Run and the image stored in the Artifact Repository
 - if you want to restrict access to the service, the easiest way is to use the automatic integration tool available with Cloud Run
 
