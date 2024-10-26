@@ -64,7 +64,7 @@ def librarian_assistant(query: str) -> str:
 
 def image_captioning(uploaded_metadata: tuple, prompt:str) -> str:
     """
-    Wrapper on Gemini for answering questions as a image caption generator
+    Wrapper on Gemini for answering questions as an image caption generator
     :param uploaded_metadata: (content_type, gs:// uri of the created blob)
     :param prompt: prompt
     :return: generated caption as string
@@ -98,7 +98,7 @@ def upload_object_on_gcs(content: str, bucket_name: str, prefix_blob_name: str) 
 def writing_assistant(key: str, persona: str) -> None:
     """
     Manage the conversation for the writing assistant.
-    :param key: streamlit key to identified the UI element
+    :param key: streamlit key to identify the UI element
     :param persona: the personal of the chatbot.
     :return: None
     """
@@ -173,7 +173,7 @@ def image_assistant(
 def image_generation_cols(nb_image: bool=True, allow_kids: bool=False) -> None:
     """
     Image generation parameters columns
-    :param nb_image: add a column for choosing how many images generated if True
+    :param nb_image: add a column for choosing how many images are generated if True
     :param allow_kids: add the allow_all option if True
     :return: None
     """
@@ -296,7 +296,7 @@ st.title(":dizzy: GenAI Creative Assistant")
 
 st.markdown("""
 Welcome to the Generative AI Creative Assistant Platform.
-Here you will find a GenAI toolbox to help you for:
+Here you will find a GenAI toolbox to help you with the:
 - Moodboards Creation
 - Documentation (External Resources Search)
 - ChatBot Ideation
@@ -374,7 +374,7 @@ with tab_mood_gen:
     st.markdown("""
     In this section, you can create moodboards.
     Just describe vaguely or precisely the thematics of the moodboard and\
-    let the Assistant drafts something for you.
+    let the Assistant draft something for you.
     """)
 
     st.subheader("Moodboards Creation Assistant")
@@ -410,7 +410,7 @@ with tab_mood_gen:
             prompt=prompt,
             bucket_name=bucket_name,
             folder_name=f"generated_moodboards/{title}",
-            nb_image=False, 
+            nb_image=True, 
             allow_kids=False,
             model_choice=True,
             checkbox_label="Save generated moodboard",
@@ -472,7 +472,7 @@ with tab_text_gen:
         if reset_chat_button and f'{key_writing}_text_chat_history' in st.session_state.keys():
             del st.session_state[f'{key_writing}_text_chat_history']
 
-    # Image Captionning
+    # Image Captioning
     st.subheader("Products Analysis")
 
     st.info("You can save the generated caption using the filename of the image that you have uploaded.")
@@ -503,7 +503,7 @@ with tab_text_gen:
                 output = image_captioning(uploaded_metadata, captioning_prompt)
                 st.markdown(output)
 
-        # saving checkbok
+        # saving checkbox
         with col_img_captioning_2:
             save_caption = st.checkbox("Save caption")
 
@@ -602,7 +602,7 @@ with tab_market_gen:
     st.subheader("Marketing Visual Assistant")
 
     st.info("You can save the draft images in a named folder. \
-        Do not forget to specific this name before generating the \
+        Do not forget to specify this name before generating the \
             images if you want to save the images."
     )
 
@@ -624,7 +624,7 @@ with tab_market_gen:
 
         # image generation ui
         image_generation_ui(
-            prompt=prompt,
+            prompt=enriched_prompt,
             bucket_name=bucket_name,
             prefix_blob_name=f"generated_marketing_pictures",
             nb_image=True,
