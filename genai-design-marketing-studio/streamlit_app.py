@@ -38,7 +38,7 @@ def load_prompts() -> dict:
     """
     Load the prompts library in the Streamlite session state"
     :return: prompts as a dict
-    ""
+    """
     with open("./prompts/prompts.json") as f:
         return json.load(f)
 
