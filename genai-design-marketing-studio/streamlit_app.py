@@ -424,7 +424,7 @@ with tab_text_gen:
     st.markdown("""
         In this section, you can:
         - Run text ideation with the Assistant,
-        - Ask the Assistant to analyze Jewels pictures and illustrations
+        - Ask the Assistant to analyze pictures and illustrations
     """)
 
     # bot interface
@@ -549,8 +549,8 @@ with tab_market_gen:
 
     st.markdown("""
         In this section, you can:
-        - Run text ideation with the Assistant,
-        - Ask the Assistant to analyze Jewels pictures and illustrations
+        - Interact with a Marketing Assistant to brainstorm about your next campaign,
+        - Ask the Assistant to create pictures and illustrations from your conversation
     """)
 
     # bot interface
