@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from vertexai.generative_models import GenerativeModel, Part, SafetySetting, FinishReason, Tool
+from vertexai.generative_models import GenerativeModel, Part, SafetySetting, GenerationConfig, FinishReason, Tool
 from vertexai.preview.vision_models import ImageGenerationModel
 import vertexai.generative_models as generative_models
 import vertexai
@@ -56,31 +56,33 @@ tools = [
 ]
 
 
-def generate_llm(model_name: str, system_instruction: str, prompt: str) -> str:
+def generate_llm(model_name: str, system_instruction: str, prompt: str) -> tuple:
     """
     Generic interface for LLM applications
     :param model_name: name of the model to be used as string
     :param system_instruction: system instruction as string
     :param prompt: instructions as string
-    :return: generated output as string
+    :return: (generated output as string, grounding information)
     """
   
     # Init the model
     model = GenerativeModel(
         model_name,
-        system_instruction=[system_instruction],
-        tools=tools
+        system_instruction=[system_instruction]
     )
 
     # Get the response
     response = model.generate_content(
         [prompt],
-        generation_config=generation_config,
+        generation_config = GenerationConfig(
+            temperature=0.0,
+        ),
         safety_settings=safety_settings,
+        tools=tools,
         stream=False
     )
 
-    return (response.text)
+    return (response.text, response.candidates[0].grounding_metadata.search_entry_point.rendered_content)
 
 
 def generate_lmm(model_name: str, system_instruction: str, prompt: str, uploaded_metadata: tuple) -> str:
