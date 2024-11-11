@@ -99,7 +99,7 @@ def writing_assistant(key: str, persona: str) -> None:
     """
     Manage the conversation for the writing assistant.
     :param key: streamlit key to identify the UI element
-    :param persona: the personal of the chatbot.
+    :param persona: the persona of the chatbot.
     :return: None
     """
 
