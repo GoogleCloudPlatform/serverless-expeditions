@@ -110,8 +110,10 @@ def writing_assistant(key: str, persona: str) -> None:
     with st.container():
         message = st.chat_input("👋 Hello, How can I help you today?", key=f"{key}_input")
     with st.container(height=400):
+        # if message or (f'{key}_text_chat_history' in st.session_state and st.session_state[f'{key}_text_chat_history']):
         if message and message != "👋 Hello, How can I help you today?":
             # init the chat history in the session state
+            # if f'{key}_text_chat_history' not in st.session_state or not st.session_state[f'{key}_text_chat_history']:
             if f'{key}_text_chat_history' not in st.session_state:
                 chat_session = create_chat_session(model_name, persona)
                 st.session_state[f'{key}_text_chat_history'] = []
@@ -123,6 +125,7 @@ def writing_assistant(key: str, persona: str) -> None:
                     st.markdown(m["content"])
 
             # Add user message to chat history
+            # if message:
             st.session_state[f'{key}_text_chat_history'].append({"role": "user", "content": message})
 
             # Display user message in chat message container
