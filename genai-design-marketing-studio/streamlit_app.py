@@ -107,9 +107,12 @@ def writing_assistant(key: str, persona: str) -> None:
     model_name = "gemini-1.5-flash-001"
 
     # Init the conversation
-    with st.container():
+    chat_input_container = st.container()
+    with chat_input_container:
         message = st.chat_input("👋 Hello, How can I help you today?", key=f"{key}_input")
-    with st.container(height=400):
+
+    main_chat_container = st.container(height=400)
+    with main_chat_container:
         # if message or (f'{key}_text_chat_history' in st.session_state and st.session_state[f'{key}_text_chat_history']):
         if message and message != "👋 Hello, How can I help you today?":
             # init the chat history in the session state
