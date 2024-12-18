@@ -113,8 +113,7 @@ def writing_assistant(key: str, persona: str) -> None:
 
     main_chat_container = st.container(height=400)
     with main_chat_container:
-        # if message or (f'{key}_text_chat_history' in st.session_state and st.session_state[f'{key}_text_chat_history']):
-        if message and message != "👋 Hello, How can I help you today?":
+        if message or (f'{key}_text_chat_history' in st.session_state and st.session_state[f'{key}_text_chat_history']):
             # init the chat history in the session state
             # if f'{key}_text_chat_history' not in st.session_state or not st.session_state[f'{key}_text_chat_history']:
             if f'{key}_text_chat_history' not in st.session_state:
@@ -128,23 +127,23 @@ def writing_assistant(key: str, persona: str) -> None:
                     st.markdown(m["content"])
 
             # Add user message to chat history
-            # if message:
-            st.session_state[f'{key}_text_chat_history'].append({"role": "user", "content": message})
+            if message:
+                st.session_state[f'{key}_text_chat_history'].append({"role": "user", "content": message})
 
-            # Display user message in chat message container
-            with st.chat_message("user"):
-                st.markdown(message)
-            with st.chat_message("assistant"):
-                current_chat_session = st.session_state[f'{key}_text_chat_session']
-                responses = st.session_state[f'{key}_text_chat_session'].send_message(message, stream=True)
-                texts = [r.text for r in responses]
-                full_response = ""
-                for t in texts:
-                    full_response += ' ' + t
-                st.write_stream(texts)
-                st.session_state[f'{key}_text_chat_history'].append(
-                    {"role": "assistant", "content": full_response}
-                )
+                # Display user message in chat message container
+                with st.chat_message("user"):
+                    st.markdown(message)
+                with st.chat_message("assistant"):
+                    current_chat_session = st.session_state[f'{key}_text_chat_session']
+                    responses = st.session_state[f'{key}_text_chat_session'].send_message(message, stream=True)
+                    texts = [r.text for r in responses]
+                    full_response = ""
+                    for t in texts:
+                        full_response += ' ' + t
+                    st.write_stream(texts)
+                    st.session_state[f'{key}_text_chat_history'].append(
+                        {"role": "assistant", "content": full_response}
+                    )
 
 
 def image_assistant(
@@ -478,6 +477,7 @@ with tab_text_gen:
         )
         if reset_chat_button and f'{key_writing}_text_chat_history' in st.session_state.keys():
             del st.session_state[f'{key_writing}_text_chat_history']
+            st.rerun()
 
     # Image Captioning
     st.subheader("Products Analysis")
@@ -604,6 +604,7 @@ with tab_market_gen:
         )
         if reset_chat_button and f'{key_marketing}_text_chat_history' in st.session_state.keys():
             del st.session_state[f'{key_marketing}_text_chat_history']
+            st.rerun()
 
     # Marketing Visual generator
     st.subheader("Marketing Visual Assistant")
