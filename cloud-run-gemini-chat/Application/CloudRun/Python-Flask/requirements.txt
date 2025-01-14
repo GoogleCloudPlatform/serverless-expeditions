@@ -1,5 +1,0 @@
-Flask>=3.0
-Flask-WTF>=1.2
-google-cloud-secret-manager>=2.19
-markdown>=3.6
-gunicorn>=21.2
