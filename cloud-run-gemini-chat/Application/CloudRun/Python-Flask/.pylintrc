@@ -1,0 +1,5 @@
+[MESSAGES CONTROL]
+disable=invalid-name, broad-exception-caught
+
+[FORMAT]
+indent-string="\t"
