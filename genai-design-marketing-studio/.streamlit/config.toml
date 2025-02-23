@@ -1,0 +1,11 @@
+[server]
+port = 8080
+enableCORS = false
+enableXsrfProtection = false
+
+[browser]
+serverAddress = "localhost"
+gatherUsageStats = false
+
+[theme]
+base = 'light'
