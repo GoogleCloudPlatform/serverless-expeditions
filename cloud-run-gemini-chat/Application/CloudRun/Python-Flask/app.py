@@ -44,7 +44,7 @@ SECRET_NAME = "GEMINI_API_KEY"
 # The Gemini API Key read from Google Secrets Manager
 #-------------------------------------------------------------------------------
 
-gemini_api_key = 'AIzaSyBmdRFzwspedvRUsH34tTjZbGcNpfLVkko'
+gemini_api_key = None
 
 #-------------------------------------------------------------------------------
 # Create the Flask application
@@ -56,7 +56,7 @@ app = Flask(__name__)
 # TODO: Update with a different value
 #-------------------------------------------------------------------------------
 
-app.config["SECRET_KEY"] = "9b37d4693c274cc553524218819305e3fa739a12ed84dc7b43d882d6c3320004"
+app.config["SECRET_KEY"] = ""
 
 #-------------------------------------------------------------------------------
 # CSRF - Cross Site Request Forgery
@@ -159,4 +159,4 @@ if __name__ == "__main__":
 		debugFlag = True
 		print('Debug enabled')
 
-	app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+	app.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

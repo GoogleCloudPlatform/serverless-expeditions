@@ -1,6 +1,6 @@
 const {SecretManagerServiceClient} = require('@google-cloud/secret-manager').v1;
 
-const PROJECT_ID = "[ENTER_YOUR_PROJECT_ID_HERE]"
+const PROJECT_ID = "development-219304"
 const SECRET_NAME = "GEMINI_API_KEY"
 
 async function init_secrets() {
