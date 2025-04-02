@@ -1,0 +1,20 @@
+substitutions:
+  _SERVICE_NAME: genai_design_platform
+  _PROJECT_ID: your_project_id
+  _REPOSITORY_ID : your_repository_id
+
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY_ID}/${_SERVICE_NAME}/${_SERVICE_NAME}:latest', '.']
+
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-central1-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY_ID}/${_SERVICE_NAME}:latest']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+# Store image in the Google Artifact Registry
+images:
+- us-central1-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY_ID}/${_SERVICE_NAME}

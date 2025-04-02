@@ -1,0 +1,12 @@
+# This is a sample yaml file that can be used to deploy a new Cloud Run Service
+# See https://cloud.google.com/run/docs/deploying#yaml
+
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: SERVICE # Replace with name to use for Cloud Run service
+spec:
+  template:
+    spec:
+      containers:
+      - image: IMAGE # Replace with image URL

@@ -1,5 +1,5 @@
 {
-  "name": "rest-api",
+  "name": "test-yaml-deployments",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,10 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "license": "Apache Version 2.0",
-  "author": "Google Inc.",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "redis": "^3.0.2"
+    "express": "^4.18.1"
   }
 }

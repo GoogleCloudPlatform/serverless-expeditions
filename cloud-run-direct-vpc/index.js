@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -46,40 +60,6 @@ async function getArtistFromCache(id) {
     }
   }
   return JSON.parse(await redisGet(id));
-}
-
-// Update an artist. The payload should contain an id field, plus any fields
-// that should be updated or added to the artist record.
-app.put('/artist', async (req, res) => {
-  try {
-    const artistUpdate = req.body;
-    await updateArtistInCache(artistUpdate);
-    res.json({status: "Success"});
-  }
-  catch(ex) {
-    res.status(500).json({error: ex.toString()});
-  }
-})
-
-async function updateArtistInCache(artistUpdate) {
-  // If two requests update the same artist at the same time, the code below
-  // *might* put stale data into the cache. If your application is updating JSON
-  // objects very frequently, consider using https://oss.redislabs.com/redisjson
-  const artist = await getArtistFromCache(artistUpdate.id);
-  if (artist) {
-    Object.assign(artist, artistUpdate);
-    redisClient.set(artist.id, JSON.stringify(artist));
-    await updateArtistInDatabase(artistUpdate);
-  }
-}
-
-async function updateArtistInDatabase(artistUpdate) {
-  const sleep = require('util').promisify(setTimeout);
-  await sleep(3000); // Simulate a slow database write.
-  const artist = artistsInDatabase.find(a => a.id==artistUpdate.id);
-  if (artist) {
-    Object.assign(artist, artistUpdate);
-  }
 }
 
 // Return all artists currently in the database.
