@@ -19,7 +19,7 @@ export default function Home() {
   }
   return (
     <main>
-      <h1>Hello Martin!</h1>
+      <h1>Hello Jared!</h1>
       <h2>Luke&apos;s Favorite Things</h2>
       <input
         placeholder="New Favorite Thing"
