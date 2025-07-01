@@ -14,45 +14,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from vertexai.generative_models import GenerativeModel, Part, SafetySetting, GenerationConfig, FinishReason, Tool
+# Google genai API for Gemini
+from google.genai.types import (
+    HttpOptions, GoogleSearch, GenerateContentConfig, SafetySetting, Tool, HarmCategory, HarmBlockThreshold
+)
+from google.genai import types
+from google import genai
+
+# Google Vertex AI API for Imagen
 from vertexai.preview.vision_models import ImageGenerationModel
-import vertexai.generative_models as generative_models
 import vertexai
+
+import streamlit as st
 import base64
-
-
-# configuration parameters
-generation_config = {
-    "max_output_tokens": 8192,
-    "temperature": 1,
-    "top_p": 0.95,
-}
 
 # safety setting
 safety_settings = [
     SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold=SafetySetting.HarmBlockThreshold.BLOCK_ONLY_HIGH
+        category=HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold=HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
     ),
     SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-        threshold=SafetySetting.HarmBlockThreshold.BLOCK_ONLY_HIGH
+        category=HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold=HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
     ),
     SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-        threshold=SafetySetting.HarmBlockThreshold.BLOCK_ONLY_HIGH
+        category=HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+        threshold=HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
     ),
     SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold=SafetySetting.HarmBlockThreshold.BLOCK_ONLY_HIGH
+        category=HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold=HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
     ),
-]
-
-# tool for answers grounding
-tools = [
-    Tool.from_google_search_retrieval(
-        google_search_retrieval=generative_models.grounding.GoogleSearchRetrieval()
-    )
 ]
 
 
@@ -64,25 +57,40 @@ def generate_llm(model_name: str, system_instruction: str, prompt: str) -> tuple
     :param prompt: instructions as string
     :return: (generated output as string, grounding information)
     """
-  
-    # Init the model
-    model = GenerativeModel(
-        model_name,
-        system_instruction=[system_instruction]
-    )
+
+    # Create the VertexAI client
+    client = None
+    if 'project_id' in st.session_state.keys() and st.session_state['project_id'] != "":
+        client = genai.Client(
+            vertexai=True, 
+            project=st.session_state['project_id'], 
+            location=st.session_state['location'],
+            http_options=HttpOptions(api_version="v1")
+        )
+
+    if not client:
+        return ("Impossible to reach Gemini, did you choose the GCP project in the setting?", "")
 
     # Get the response
-    response = model.generate_content(
-        [prompt],
-        generation_config = GenerationConfig(
-            temperature=0.0,
-        ),
-        safety_settings=safety_settings,
-        tools=tools,
-        stream=False
+    response = client.models.generate_content(
+        model=model_name,
+        contents=prompt,
+        config=GenerateContentConfig(
+            tools=[Tool(google_search=GoogleSearch())],
+            temperature=1.0,
+            max_output_tokens=2048,
+            safety_settings=safety_settings
+        )
     )
 
-    return (response.text, response.candidates[0].grounding_metadata.search_entry_point.rendered_content)
+    if response.text:
+        text = response.text
+        grounding_content = response.candidates[0].grounding_metadata.search_entry_point.rendered_content
+    else:
+        text = "I was not able to answer your question, please retry or modify slightly your question..."
+        grounding_content = ""
+
+    return (text, grounding_content)
 
 
 def generate_lmm(model_name: str, system_instruction: str, prompt: str, uploaded_metadata: tuple) -> str:
@@ -95,26 +103,55 @@ def generate_lmm(model_name: str, system_instruction: str, prompt: str, uploaded
     :return: generated output as string
     """
 
-    # Init the model
-    model = GenerativeModel(
-        model_name,
-        system_instruction=[system_instruction]
-    )
+    # Create the VertexAI client
+    client = None
+    if 'project_id' in st.session_state.keys() and st.session_state['project_id'] != "":
+        client = genai.Client(
+            vertexai=True, 
+            project=st.session_state['project_id'], 
+            location=st.session_state['location'],
+            http_options=HttpOptions(api_version="v1")
+        )
+
+    if not client:
+        return ("Impossible to reach Gemini, did you choose the GCP project in the setting?", "")
 
     mime_type, uri = uploaded_metadata
 
     # Encode the image content
-    image = Part.from_uri(
+    image = types.Part.from_uri(
         mime_type=mime_type,
-        uri=uri
+        file_uri=uri
     )
 
     # Get the response
-    response = model.generate_content(
-        [image, prompt],
-        generation_config=generation_config,
-        safety_settings=safety_settings,
-        stream=False
+    contents = [
+    types.Content(
+      role="user",
+      parts=[
+        image,
+        types.Part.from_text(text=prompt)
+      ]
+    ),
+  ]
+
+    # Generation Config
+    generate_content_config = types.GenerateContentConfig(
+        temperature = 1,
+        top_p = 1,
+        seed = 0,
+        max_output_tokens = 2048,
+        safety_settings = safety_settings,
+        system_instruction=[types.Part.from_text(text=system_instruction)],
+        thinking_config=types.ThinkingConfig(
+            thinking_budget=0
+        )
+    )
+
+    response = client.models.generate_content(
+        model = model_name,
+        contents = contents,
+        config = generate_content_config
     )
 
     return (response.text)
@@ -128,14 +165,37 @@ def create_chat_session(model_name: str, system_instruction: str):
     :return: chat session
     """
 
-    model = GenerativeModel(
-        model_name=model_name,
-        generation_config=generation_config,
-        safety_settings=safety_settings,
-        system_instruction=[system_instruction]
+    # Create the VertexAI client
+    client = None
+    if 'project_id' in st.session_state.keys() and st.session_state['project_id'] != "":
+        client = genai.Client(
+            vertexai=True, 
+            project=st.session_state['project_id'], 
+            location=st.session_state['location'],
+            http_options=HttpOptions(api_version="v1")
+        )
+
+    if not client:
+        return ("Impossible to reach Gemini, did you choose the GCP project in the setting?", "")
+
+    # Generation Config
+    generate_content_config = types.GenerateContentConfig(
+        temperature = 1,
+        top_p = 1,
+        seed = 0,
+        safety_settings = safety_settings,
+        system_instruction=[types.Part.from_text(text=system_instruction)],
+        thinking_config=types.ThinkingConfig(thinking_budget=0)
     )
 
-    return model.start_chat(history=[])
+    # create the chat session
+    chat_session = client.chats.create(
+        model=model_name,
+        config=generate_content_config,
+        history=[]
+    )
+
+    return chat_session
 
 
 def generate_images(
