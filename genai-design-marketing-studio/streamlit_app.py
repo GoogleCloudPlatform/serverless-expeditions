@@ -15,7 +15,6 @@
 # limitations under the License.
 
 from generative import generate_llm, generate_lmm, create_chat_session, generate_images
-
 from google.cloud import storage
 import vertexai
 
@@ -57,7 +56,7 @@ def librarian_assistant(query: str) -> str:
     prompt = st.session_state['prompts']['librarian_assistant'].format(query=query)
 
     # model name
-    model_name = "gemini-1.5-flash-001"
+    model_name = "gemini-2.5-flash"
 
     return (generate_llm(model_name, persona, query))
 
@@ -74,7 +73,7 @@ def image_captioning(uploaded_metadata: tuple, prompt:str) -> str:
     persona = st.session_state['prompts']['image_captioning_persona']
 
     # model name
-    model_name = "gemini-1.5-flash-001"
+    model_name = "gemini-2.5-flash"
 
     return (generate_lmm(model_name, persona, prompt, uploaded_metadata))
 
@@ -99,12 +98,12 @@ def writing_assistant(key: str, persona: str) -> None:
     """
     Manage the conversation for the writing assistant.
     :param key: streamlit key to identify the UI element
-    :param persona: the persona of the chatbot.
+    :param persona: the personal of the chatbot.
     :return: None
     """
 
     # model name
-    model_name = "gemini-1.5-flash-001"
+    model_name = "gemini-2.5-flash"
 
     # Init the conversation
     chat_input_container = st.container()
@@ -115,7 +114,6 @@ def writing_assistant(key: str, persona: str) -> None:
     with main_chat_container:
         if message or (f'{key}_text_chat_history' in st.session_state and st.session_state[f'{key}_text_chat_history']):
             # init the chat history in the session state
-            # if f'{key}_text_chat_history' not in st.session_state or not st.session_state[f'{key}_text_chat_history']:
             if f'{key}_text_chat_history' not in st.session_state:
                 chat_session = create_chat_session(model_name, persona)
                 st.session_state[f'{key}_text_chat_history'] = []
@@ -135,7 +133,7 @@ def writing_assistant(key: str, persona: str) -> None:
                     st.markdown(message)
                 with st.chat_message("assistant"):
                     current_chat_session = st.session_state[f'{key}_text_chat_session']
-                    responses = st.session_state[f'{key}_text_chat_session'].send_message(message, stream=True)
+                    responses = st.session_state[f'{key}_text_chat_session'].send_message_stream(message)
                     texts = [r.text for r in responses]
                     full_response = ""
                     for t in texts:
@@ -145,14 +143,13 @@ def writing_assistant(key: str, persona: str) -> None:
                         {"role": "assistant", "content": full_response}
                     )
 
-
 def image_assistant(
     prompt: str,
     number_of_images: int=1,
     aspect_ratio: str="1:1",
     person_safety: str="dont_allow",
     watermarking: bool=False,
-    model_name: str="imagen-3.0-generate-001"
+    model_name: str="imagen-3.0-generate-002"
 ) -> None:
     """
     Wrapper around Imagen3 Image generation
@@ -251,10 +248,10 @@ def image_generation_ui(
     number_of_images, aspect_ratio, person_safety, watermarking = image_generation_cols(nb_image=nb_image)
 
     # model name
-    model_name = "imagen-3.0-generate-001"
+    model_name = "imagen-3.0-generate-002"
     if model_choice:
         model_name = st.selectbox(
-            "Model", options=["imagen-3.0-fast-generate-001", "imagen-3.0-generate-001"]
+            "Model", options=["imagen-3.0-fast-generate-001", "imagen-3.0-generate-002"]
         )
 
     # Generation and Display of images
@@ -329,14 +326,15 @@ with st.expander("Project Settings"):
         submitted = st.form_submit_button("Save settings")
 
     if submitted:
-         # init vertex ai
-        vertexai.init(project=project_id, location=region)
-
+        st.session_state['bucket_name'] = bucket_name
+        st.session_state['location'] = region
+        st.session_state['project_id'] = project_id
         # bucket creation if the bucket does not exist
         try:
             storage_client.create_bucket(bucket_name, location=location)
         except:
             st.warning("The bucket already exists...")
+        vertexai.init(project=project_id, location=region) 
 
 
 st.info("Navigate though the different tabs to find the tools that you need.")
