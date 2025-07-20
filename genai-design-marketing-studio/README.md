@@ -1,7 +1,7 @@
 # GenAI Design and Marketing Studio Application
 ### Designed by Google WSSV GenAI FSA team 
 #### contact: jeromemassot@google.com
-#### October 2024
+#### July 2025
 
 This folder contains the source code for the Generative AI Design and Marketing Studio application.
 
@@ -32,9 +32,13 @@ The repository contains all the code needed to deploy the Design and Marketing p
 ### How do you deploy the application on Google Cloud?
 
 The easiest way to deploy this application on your Google Cloud project is to:
-- build the image with Cloud Build using the Docker file  and store it in your Artifact Repository
-- deploy the service using Cloud Run and the image stored in the Artifact Repository
-- if you want to restrict access to the service, the easiest way is to use the automatic integration tool available with Cloud Run
+- [OPTIONAL] Build the image with Cloud Build using the Docker file  and store it in your Artifact Registry: to do so, from the main folder of the application (the one where the Dockerfile is located), just enter the following command `gcloud builds submit`. Of course, you first need to update the cloudbuild.yaml with your project id and the repository id that will store the container image.
+  
+- [DEPLOY FROM ARTIFACT REGISTRY] Deploy the service on Cloud Run, using Cloud Run UI and the image stored in the Artifact Repository. The user interface is straightforward. You can deploy the image on the default backend (no GPU needed), as Gemini runs all the Generative AI tasks on Vertex AI and Imagen endpoints.
+
+- [DEPLOY DIRECTLY FROM THE SOURCE] Deploy the service on Cloud Run directly from the source (main folder) by using the following command: `gcloud run deploy genai-design-platform --source .`. The newly built container image is pushed to a repository in Artifact Registry named `cloud-run-source-deploy`. The command will ask about the location of the created artifact registry and some authorization confirmation.
+  
+- If you want to restrict access to the service, the easiest way is to use the automatic integration tool available with Cloud Run
 
 ## How do you use this Design and Marketing Studio?
 A short documentation is provided in the repository.
