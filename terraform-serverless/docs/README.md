@@ -23,8 +23,8 @@ For production use cases, it's best to setup a terraform state storage bucket an
     ```
     PROJECT_ID=$(gcloud config get-value project)
     BUCKET=${PROJECT_ID}-tfstate
-    gsutil mb gs://${BUCKET}
-    gsutil versioning set on gs://${BUCKET}
+    gcloud storage buckets create gs://${BUCKET}
+    gcloud storage buckets update gs://${BUCKET} --versioning
     ```
 
 * In `main.tf`, add the following lines: 
