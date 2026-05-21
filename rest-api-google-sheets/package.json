@@ -12,6 +12,6 @@
   "license": "",
   "dependencies": {
     "express": "^4.17.1",
-    "googleapis": "^67.0.0"
+    "googleapis": "^172.0.0"
   }
 }
