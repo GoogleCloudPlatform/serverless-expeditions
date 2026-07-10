@@ -23,6 +23,6 @@
     "express": "^4.19.2",
     "http-errors": "^1.6.3",
     "markdown-it": "^14.1.0",
-    "morgan": "^1.9.1"
+    "morgan": "^1.11.0"
   }
 }
